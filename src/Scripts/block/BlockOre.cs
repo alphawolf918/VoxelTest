@@ -25,4 +25,10 @@ public class BlockOre : Block
         return this;
     }
 
+    public override void onBroken(EntityPlayer player)
+    {
+        base.onBroken(player);
+        Logger.Log("You found an ore!");
+    }
+
 }

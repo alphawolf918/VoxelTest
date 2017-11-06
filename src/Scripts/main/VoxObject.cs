@@ -41,7 +41,7 @@ public abstract class VoxObject : ITickable, IGameInventoryCompatible
         this.currentStackSize = size;
     }
 
-    public virtual void increaseCurrentStackSize(int bySize)
+    public virtual void increaseCurrentStackSize(int bySize = 1)
     {
         int s = currentStackSize + bySize;
         if (s > maxStackSize)
@@ -55,7 +55,7 @@ public abstract class VoxObject : ITickable, IGameInventoryCompatible
         currentStackSize = s;
     }
 
-    public virtual void decreaseCurrentStackSize(int bySize)
+    public virtual void decreaseCurrentStackSize(int bySize = 1)
     {
         int s = currentStackSize - bySize;
         s = (s < 0) ? 0 : s;

@@ -31,10 +31,14 @@ public class UvMap
 
 		foreach (UvMap m in _Maps)
 		{
-			if (m.name.Equals(name))
-			{
-				return m;
-			}
+            if (m.name.Equals(name))
+            {
+                return m;
+            }
+            else
+            {
+                Logger.Log("Error");
+            }
 		}
 
 		Logger.Log("Can't find associated image called: " + name);
@@ -43,7 +47,7 @@ public class UvMap
 
 		foreach (UvMap m in _Maps)
 		{
-			_names.Add(m.name + "!=" + name);
+			_names.Add(m.name + " NOT " + name);
 		}
 
 		File.WriteAllLines("names.txt", _names.ToArray());

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Chunk : ITickable
 {
 
+    //This is the default biome for the game to fall back on.
     private BiomeBase chunkBiome = BiomeBase.biomePlains;
 
     public bool hasDecorated = false;
@@ -22,7 +23,7 @@ public class Chunk : ITickable
 
     public int heightOffset = 100;
 
-    public int heightScale = 20;
+    public int heightScale = 10;
     public float detailScale = 25.0f;
 
     public int amountOfClouds = 5;
@@ -32,6 +33,8 @@ public class Chunk : ITickable
     private World worldObj;
 
     public Block[,,] blocks;
+
+    public World world;
 
     public int posX
     {
@@ -68,7 +71,7 @@ public class Chunk : ITickable
 
     public List<Block> chunkBlocks = new List<Block>();
 
-    int minCaveY = 6;
+    int minCaveY = 4;
 
     public Chunk(int px, int pz, World world)
     {
@@ -142,6 +145,22 @@ public class Chunk : ITickable
         return p1;
     }
 
+    public float GetSeededHeight(float px, float py, float pz, int s)
+    {
+        px += (posX * chunkWidth);
+        pz += (posZ * chunkWidth);
+
+        float x = px;
+        float z = pz;
+        int seed = s;
+
+        // float p1 = Mathf.PerlinNoise((px + s) / GameManager.Sdx, (pz + s) / GameManager.Sdz) * GameManager.Smul;
+        float p1 = (int) (Mathf.PerlinNoise((x + seed) / detailScale, (z + seed) / detailScale) * heightScale) + heightOffset;
+        p1 *= (GameManager.Smy * py);
+
+        return p1;
+    }
+
     public virtual void Start()
     {
         if (!firstChunkLoaded)
@@ -157,6 +176,9 @@ public class Chunk : ITickable
 
         blocks = new Block[chunkWidth, getChunkHeight(), chunkWidth];
 
+        System.Random rand = new System.Random();
+        int seed = 100 * (rand.Next(8)+1);
+
         for (int x = 0; x < getChunkWidth(); x++)
         {
             for (int y = 0; y < getChunkHeight(); y++)
@@ -167,7 +189,7 @@ public class Chunk : ITickable
 
                     perlin -= (chunkBiome.getChunkHeightDifference() / 2);
 
-                    if (perlin > GameManager.Scutoff)
+                    if (perlin > GameManager.Scutoff || y > 64)
                     {
                         setBlock(x, y, z, Block.air);
                     }
@@ -200,7 +222,7 @@ public class Chunk : ITickable
 
                                 if (!this.hasDecorated)
                                 {
-                                    chunkBiome.decorate(this, x, y, z);
+                                    chunkBiome.decorate(this, x, y + 1, z);
                                     hasDecorated = true;
                                 }
                             }
@@ -209,7 +231,7 @@ public class Chunk : ITickable
 
                     if (y <= 2)
                     {
-                        setBlock(x, y, z, Block.bedrock);
+                        setBlock(x, y, z, Block.endrock);
                     }
 
                     if (y == 0)
@@ -275,7 +297,7 @@ public class Chunk : ITickable
                             }
                         }
 
-                        if (Utils.getRNG(875) && y > minCaveY)
+                        if (Utils.getRNG(675) && y > minCaveY)
                         {
                             this.generateCaveSystem(x, y, z);
                         }
@@ -517,7 +539,7 @@ public class Chunk : ITickable
                 }
             }
         }
-        return Block.stone;
+        return Block.gray2;
     }
 
     public void Tick()

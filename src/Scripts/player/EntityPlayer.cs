@@ -18,11 +18,14 @@ public sealed class EntityPlayer : MonoBehaviour
 
     private float maxDistance = 25.0f;
 
-    public Block activeBlock = Block.dirt;
+    public Block activeBlock = Block.orange;
     public int activeSlot = 0;
 
     private float maxHealth = 20.0f;
     private float currentHealth = 20.0f;
+
+    private World worldObj;
+    private Chunk chunkObj;
 
     public static Chunk chunkInstance = null;
 
@@ -33,13 +36,33 @@ public sealed class EntityPlayer : MonoBehaviour
         Delete = Instantiate(Resources.Load<GameObject>("Delete"), this.transform.position, Quaternion.identity) as GameObject;
 
         activeSlot = 0;
-        activeBlock = Block.dirt;
+        activeBlock = Block.orange;
         //Utils.ToBlock(Inventory[activeSlot]);
     }
 
-    public static EntityPlayer getPlayerInstance()
+    public static EntityPlayer getInstance()
     {
         return instance;
+    }
+
+    public World getWorldObj()
+    {
+        return this.worldObj;
+    }
+
+    public void setWorldObj(World world)
+    {
+        this.worldObj = world;
+    }
+
+    public Chunk getChunkObj()
+    {
+        return this.chunkObj;
+    }
+
+    public void setChunkObj(Chunk chunk)
+    {
+        this.chunkObj = chunk;
     }
 
     public VoxObject getInventoryItem(int slot)
@@ -132,7 +155,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 0;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.dirt;
+            this.activeBlock = Block.orange;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -141,7 +164,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 1;
             // this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.grass;
+            this.activeBlock = Block.green;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -150,7 +173,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 2;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.stone;
+            this.activeBlock = Block.gray2;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -159,7 +182,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 3;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.cobblestone;
+            this.activeBlock = Block.gray;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -168,7 +191,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 4;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.sand;
+            this.activeBlock = Block.peach;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -177,7 +200,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 5;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.gravel;
+            this.activeBlock = Block.darkgray;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -186,7 +209,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 6;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.obsidian;
+            this.activeBlock = Block.black;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -195,7 +218,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 7;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.savannahGrass;
+            this.activeBlock = Block.yellow;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -204,7 +227,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 8;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.snow;
+            this.activeBlock = Block.white;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -213,7 +236,7 @@ public sealed class EntityPlayer : MonoBehaviour
         {
             this.activeSlot = 9;
             //this.activeBlock = Utils.ToBlock(Inventory[activeSlot]);
-            this.activeBlock = Block.end_stone;
+            this.activeBlock = Block.purple;
 
             Logger.Log("Active block set to " + activeBlock.getBlockName());
         }
@@ -229,7 +252,7 @@ public sealed class EntityPlayer : MonoBehaviour
 
         if (this.getHealth() <= 0.0f)
         {
-            Vector3 newPos = new Vector3(0, Chunk.getChunkHeight() + 50, 0);
+            Vector3 newPos = new Vector3(0, Chunk.getChunkHeight() + 60, 0);
             GameManager.instance.PlayerCharacter.transform.position = newPos;
             this.Inventory.Clear();
             Logger.Log("You have DIED!");

@@ -25,10 +25,12 @@ public class TextureAtlas
             int pixelWidth = pixelSize;
             int pixelHeight = pixelSize;
 
-            int atlasWidth = Mathf.CeilToInt(Mathf.Sqrt(blockTextures.Length + 1) * pixelWidth);
-            int atlasHeight = Mathf.CeilToInt(Mathf.Sqrt(blockTextures.Length + 1) * pixelHeight);
+            int blockTextLen = blockTextures.Length - 1;
 
-            Texture2D Atlas = new Texture2D(atlasWidth, atlasHeight);
+            int atlasWidth = Mathf.CeilToInt(Mathf.Sqrt(blockTextLen)) * pixelSize;
+            int atlasHeight = Mathf.CeilToInt(Mathf.Sqrt(blockTextLen)) * pixelSize;
+
+            Texture2D Atlas = new Texture2D((atlasWidth+(1*pixelSize)), atlasHeight);
 
             int c = 0;
 
@@ -37,7 +39,7 @@ public class TextureAtlas
                 for (int y = 0; y < atlasWidth / pixelWidth; y++)
                 {
 
-                    if (c >= blockTextures.Length - 1)
+                    if (c > blockTextures.Length - 1)
                     {
                         goto end;
                     }
@@ -72,7 +74,7 @@ public class TextureAtlas
                 }
             }
 
-            end:
+        end:
             ;
 
             _ATLAS = Atlas;

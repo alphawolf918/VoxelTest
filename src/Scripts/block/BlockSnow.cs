@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BlockSnow : Block {
 
-    public BlockSnow() : base("snow") {
+    public BlockSnow() : base("white") {
         this.setNeedsToUpdate();
     }
 
@@ -17,29 +17,29 @@ public class BlockSnow : Block {
 
         try
         {
-            if (chunkInstance.getBlockAt(this.x - 1, this.y, this.z) != null && chunkInstance.getBlockAt(this.x - 1, this.y, this.z) == dirt)
+            if (chunkInstance.getBlockAt(this.x - 1, this.y, this.z) != null && chunkInstance.getBlockAt(this.x - 1, this.y, this.z) == orange)
             {
                 chunkInstance.setBlock(this.x - 1, this.y, this.z, air);
-                chunkInstance.setBlock(this.x - 1, this.y, this.z, snow);
+                chunkInstance.setBlock(this.x - 1, this.y, this.z, white);
             }
 
 
-            if (chunkInstance.getBlockAt(this.x + 1, this.y, this.z) != null && chunkInstance.getBlockAt(this.x + 1, this.y, this.z) == dirt)
+            if (chunkInstance.getBlockAt(this.x + 1, this.y, this.z) != null && chunkInstance.getBlockAt(this.x + 1, this.y, this.z) == orange)
             {
                 chunkInstance.setBlock(this.x + 1, this.y, this.z, air);
-                chunkInstance.setBlock(this.x + 1, this.y, this.z, snow);
+                chunkInstance.setBlock(this.x + 1, this.y, this.z, white);
             }
 
-            if (chunkInstance.getBlockAt(this.x, this.y, this.z - 1) != null && chunkInstance.getBlockAt(this.x, this.y, this.z - 1) == dirt)
+            if (chunkInstance.getBlockAt(this.x, this.y, this.z - 1) != null && chunkInstance.getBlockAt(this.x, this.y, this.z - 1) == orange)
             {
                 chunkInstance.setBlock(this.x, this.y, this.z - 1, air);
-                chunkInstance.setBlock(this.x, this.y, this.z - 1, snow);
+                chunkInstance.setBlock(this.x, this.y, this.z - 1, white);
             }
 
-            if (chunkInstance.getBlockAt(this.x, this.y, this.z + 1) != null && chunkInstance.getBlockAt(this.x, this.y, this.z + 1) == dirt)
+            if (chunkInstance.getBlockAt(this.x, this.y, this.z + 1) != null && chunkInstance.getBlockAt(this.x, this.y, this.z + 1) == orange)
             {
                 chunkInstance.setBlock(this.x, this.y, this.z + 1, air);
-                chunkInstance.setBlock(this.x, this.y, this.z + 1, snow);
+                chunkInstance.setBlock(this.x, this.y, this.z + 1, white);
             }
 
         }

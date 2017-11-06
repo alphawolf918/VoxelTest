@@ -59,6 +59,7 @@ public class MeshData
 	public Mesh ToMesh()
 	{
 		Mesh mesh = new Mesh();
+
 		mesh.vertices = _v3s.ToArray();
 		mesh.triangles = _tris.ToArray();
 		mesh.uv = _uvs.ToArray();

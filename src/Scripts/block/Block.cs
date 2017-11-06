@@ -8,37 +8,37 @@ public class Block : VoxObject
     private bool isTransparent;
 
     public static Block air = new Block("air", true);
-    public static Block dirt = new Block("dirt");
-    public static Block grass = new BlockGrass().setDroppedBlock(dirt);
-    public static Block cobblestone = new Block("cobblestone");
-    public static Block sand = new BlockFalling("sand");
-    public static Block clay = new Block("clay");
-    public static Block gravel = new BlockFalling("gravel");
-    public static Block stone = new Block("stone").setDroppedBlock(cobblestone);
-    public static Block coal_ore = new BlockOre("coal_ore").setOreWeight(25);
-    public static Block iron_ore = new BlockOre("iron_ore").setOreWeight(20);
-    public static Block gold_ore = new BlockOre("gold_ore").setOreWeight(14);
-    public static Block diamond_ore = new BlockOre("diamond_ore").setOreWeight(9);
-    public static Block emerald_ore = new BlockOre("emerald_ore").setOreWeight(5);
-    public static Block redstone_ore = new BlockOre("redstone_ore").setOreWeight(10);
-    public static Block lapis_ore = new BlockOre("lapis_ore").setOreWeight(12);
-    public static Block amaranth_ore = new BlockOre("amaranth_ore").setOreWeight(13);
-    public static Block obsidian = new Block("obsidian");
-    public static Block bedrock = new Block("bedrock").setUnbreakable();
-    public static Block log_oak = new Block("log_oak");
-    public static Block leaves_oak = new Block("leaves_oak");
-    public static Block mushroom_top = new Block("mushroom_top");
-    public static Block mushroom_stem = new Block("mushroom_stem");
-    public static Block sandstone = new Block("sandstone");
-    public static Block savannahGrass = new BlockSavannahGrass().setDroppedBlock(dirt);
-    public static Block ice = new Block("ice");
-    public static Block snow = new BlockSnow();
-    public static Block cloud = new Block("cloud").setDroppedBlock(air);
-    public static Block netherrack = new Block("netherrack");
-    public static Block soul_sand = new Block("soul_sand");
-    public static Block end_stone = new Block("end_stone");
+    public static Block yellow = new BlockSavannahGrass().setDroppedBlock(orange);
+    public static Block orange = new Block("orange");
+    public static Block green = new BlockGrass().setDroppedBlock(orange);
+    public static Block gray = new Block("gray");
+    public static Block peach = new BlockFalling("peach");
+    public static Block lightgray = new Block("lightgray");
+    public static Block darkgray = new BlockFalling("darkgray");
+    public static Block gray2 = new Block("gray2").setDroppedBlock(gray);
+    public static Block black = new Block("black");
+    public static Block brown = new Block("brown");
+    public static Block lightgreen = new Block("lightgreen");
+    public static Block red = new Block("red");
+    public static Block darkwhite = new Block("darkwhite");
+    public static Block lightbrown = new Block("lightbrown");
+    public static Block ice = new Block("ice").setSlippery();
+    public static Block white = new BlockSnow();
+    public static Block cloud = new Block("cloud").setDropsNothing();
+    public static Block darkred = new Block("darkred");
+    public static Block darkbrown = new Block("darkbrown");
+    public static Block purple = new Block("purple");
+    public static Block candy = new Block("pink");
+    public static Block chocolate = new Block("chocolate");
+    public static Block cyan = new Block("cyan");
+    public static Block darkblue = new Block("darkblue");
+    public static Block endrock = new Block("endrock").setUnbreakable();
+    public static Block darkcyan = new Block("darkcyan");
 
     protected bool isBreakable = true;
+    protected bool isSlippery = false;
+    protected bool isRadioactive = false;
+    protected bool isToxic = false;
 
     protected bool needsToUpdate = false;
 
@@ -78,34 +78,32 @@ public class Block : VoxObject
     public static void init()
     {
         addBlock(air);
-        addBlock(grass);
-        addBlock(dirt);
-        addBlock(cobblestone);
-        addBlock(sand);
-        addBlock(clay);
-        addBlock(gravel);
-        addBlock(stone);
-        addBlock(coal_ore);
-        addBlock(iron_ore);
-        addBlock(gold_ore);
-        addBlock(diamond_ore);
-        addBlock(emerald_ore);
-        addBlock(redstone_ore);
-        addBlock(lapis_ore);
-        addBlock(amaranth_ore);
-        addBlock(obsidian);
-        addBlock(bedrock);
-        addBlock(log_oak);
-        addBlock(leaves_oak);
-        addBlock(mushroom_top);
-        addBlock(mushroom_stem);
-        addBlock(sandstone);
-        addBlock(savannahGrass);
+        addBlock(green);
+        addBlock(orange);
+        addBlock(gray);
+        addBlock(peach);
+        addBlock(lightgray);
+        addBlock(darkgray);
+        addBlock(gray2);
+        addBlock(black);
+        addBlock(brown);
+        addBlock(lightgreen);
+        addBlock(red);
+        addBlock(darkwhite);
+        addBlock(lightbrown);
+        addBlock(yellow);
         addBlock(ice);
-        addBlock(snow);
-        addBlock(netherrack);
-        addBlock(soul_sand);
-        addBlock(end_stone);
+        addBlock(white);
+        addBlock(darkred);
+        addBlock(darkbrown);
+        addBlock(purple);
+        addBlock(candy);
+        addBlock(chocolate);
+        addBlock(cyan);
+        addBlock(darkblue);
+        addBlock(endrock);
+        addBlock(darkcyan);
+
         Logger.Log("Loaded " + instance.BlockList.Count + " blocks.");
     }
 
@@ -145,6 +143,50 @@ public class Block : VoxObject
         }
         player.Inventory.Add(db);
         Logger.Log("Added to your inventory: " + db.getBlockName());
+    }
+
+    public virtual void onWalkedOver(EntityPlayer player)
+    {
+        Block block = this;
+        if (block.getIsSlippery())
+        {
+            GameManager gameMgr = GameManager.instance;
+            Vector3 playerPos = gameMgr.playerPos;
+            //TODO
+        }
+    }
+
+    public bool getIsSlippery()
+    {
+        return this.isSlippery;
+    }
+
+    public Block setSlippery(bool slippery = true)
+    {
+        this.isSlippery = slippery;
+        return this;
+    }
+
+    public bool getIsRadioactive()
+    {
+        return this.isRadioactive;
+    }
+
+    public Block setRadioactive(bool radioactive = true)
+    {
+        this.isRadioactive = radioactive;
+        return this;
+    }
+
+    public bool getIsToxic()
+    {
+        return this.isToxic;
+    }
+
+    public Block setToxic(bool toxic = true)
+    {
+        this.isToxic = toxic;
+        return this;
     }
 
     public bool getNeedsToUpdate()
@@ -213,6 +255,17 @@ public class Block : VoxObject
         return this.isTransparent;
     }
 
+    public Block setDropsNothing()
+    {
+        this.setDroppedBlock(air);
+        return this;
+    }
+
+    public bool doesDropBlockNothing()
+    {
+        return (this.getDroppedBlock() == air);
+    }
+
     public override void Start()
     {
 
@@ -225,7 +278,10 @@ public class Block : VoxObject
 
     public override void Update()
     {
-
+        if (this.needsToUpdate)
+        {
+            this.onUpdate();
+        }
     }
 
     public override void OnUnityUpdate()

@@ -7,7 +7,7 @@ using UnityEngine;
 public class BlockGrass : Block
 {
 
-    public BlockGrass() : base("grass")
+    public BlockGrass() : base("green")
     {
         this.setNeedsToUpdate();
     }
@@ -27,29 +27,29 @@ public class BlockGrass : Block
         {
             if (chunkInstance.getBlockAt(x, y + 1, z) == air)
             {
-                if (chunkInstance.getBlockAt(x - 1, y, z) != null && chunkInstance.getBlockAt(x - 1, y, z) == dirt)
+                if (chunkInstance.getBlockAt(x - 1, y, z) != null && chunkInstance.getBlockAt(x - 1, y, z) == orange)
                 {
                     chunkInstance.setBlock(x - 1, y, z, air);
-                    chunkInstance.setBlock(x - 1, y, z, grass);
+                    chunkInstance.setBlock(x - 1, y, z, green);
                 }
 
 
-                if (chunkInstance.getBlockAt(x + 1, y, z) != null && chunkInstance.getBlockAt(x + 1, y, z) == dirt)
+                if (chunkInstance.getBlockAt(x + 1, y, z) != null && chunkInstance.getBlockAt(x + 1, y, z) == orange)
                 {
                     chunkInstance.setBlock(x + 1, y, z, air);
-                    chunkInstance.setBlock(x + 1, y, z, grass);
+                    chunkInstance.setBlock(x + 1, y, z, green);
                 }
 
-                if (chunkInstance.getBlockAt(x, y, z - 1) != null && chunkInstance.getBlockAt(x, y, z - 1) == dirt)
+                if (chunkInstance.getBlockAt(x, y, z - 1) != null && chunkInstance.getBlockAt(x, y, z - 1) == orange)
                 {
                     chunkInstance.setBlock(x, y, z - 1, air);
-                    chunkInstance.setBlock(x, y, z - 1, grass);
+                    chunkInstance.setBlock(x, y, z - 1, green);
                 }
 
-                if (chunkInstance.getBlockAt(x, y, z + 1) != null && chunkInstance.getBlockAt(x, y, z + 1) == dirt)
+                if (chunkInstance.getBlockAt(x, y, z + 1) != null && chunkInstance.getBlockAt(x, y, z + 1) == orange)
                 {
                     chunkInstance.setBlock(x, y, z + 1, air);
-                    chunkInstance.setBlock(x, y, z + 1, grass);
+                    chunkInstance.setBlock(x, y, z + 1, green);
                 }
             }
 

@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
 
     public static float Sdx = 50;
     public static float Sdz = 50;
-    public static float Smy = MathHelper.GenRandFloat(0.22f, 0.32f);
-    public static float Scutoff = MathHelper.GenRandFloat(3.4f, 4.0f);
-    public static float Smul = 1.3f;
+    public static float Smy = MathHelper.GenRandFloat(0.26f, 0.32f);
+    public static float Scutoff = MathHelper.GenRandFloat(2.1f, 2.2f);
+    public static float Smul = 1.2f;
 
     public static GameManager instance;
 
@@ -62,11 +62,11 @@ public class GameManager : MonoBehaviour
 
         healthImage.enabled = true;
         healthText.enabled = true;
+        biomeText.enabled = true;
     }
 
     void Start()
     {
-
         FileManager.RegisterFiles();
         instance = this;
         TextureAtlas._Instance.CreateAtlas();

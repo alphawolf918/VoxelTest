@@ -6,7 +6,7 @@ using UnityEngine;
 public class BlockSavannahGrass : Block
 {
 
-    public BlockSavannahGrass() : base("savannah_grass")
+    public BlockSavannahGrass() : base("yellow")
     {
         this.setNeedsToUpdate();
     }
@@ -21,29 +21,29 @@ public class BlockSavannahGrass : Block
         {
             if (chunkInstance.getBlockAt(x, y + 1, z) == air)
             {
-                if (chunkInstance.getBlockAt(this.x - 1, this.y, this.z) != null && chunkInstance.getBlockAt(this.x - 1, this.y, this.z) == dirt)
+                if (chunkInstance.getBlockAt(this.x - 1, this.y, this.z) != null && chunkInstance.getBlockAt(this.x - 1, this.y, this.z) == orange)
                 {
                     chunkInstance.setBlock(this.x - 1, this.y, this.z, air);
-                    chunkInstance.setBlock(this.x - 1, this.y, this.z, savannahGrass);
+                    chunkInstance.setBlock(this.x - 1, this.y, this.z, yellow);
                 }
 
 
-                if (chunkInstance.getBlockAt(this.x + 1, this.y, this.z) != null && chunkInstance.getBlockAt(this.x + 1, this.y, this.z) == dirt)
+                if (chunkInstance.getBlockAt(this.x + 1, this.y, this.z) != null && chunkInstance.getBlockAt(this.x + 1, this.y, this.z) == orange)
                 {
                     chunkInstance.setBlock(this.x + 1, this.y, this.z, air);
-                    chunkInstance.setBlock(this.x + 1, this.y, this.z, savannahGrass);
+                    chunkInstance.setBlock(this.x + 1, this.y, this.z, yellow);
                 }
 
-                if (chunkInstance.getBlockAt(this.x, this.y, this.z - 1) != null && chunkInstance.getBlockAt(this.x, this.y, this.z - 1) == dirt)
+                if (chunkInstance.getBlockAt(this.x, this.y, this.z - 1) != null && chunkInstance.getBlockAt(this.x, this.y, this.z - 1) == orange)
                 {
                     chunkInstance.setBlock(this.x, this.y, this.z - 1, air);
-                    chunkInstance.setBlock(this.x, this.y, this.z - 1, savannahGrass);
+                    chunkInstance.setBlock(this.x, this.y, this.z - 1, yellow);
                 }
 
-                if (chunkInstance.getBlockAt(this.x, this.y, this.z + 1) != null && chunkInstance.getBlockAt(this.x, this.y, this.z + 1) == dirt)
+                if (chunkInstance.getBlockAt(this.x, this.y, this.z + 1) != null && chunkInstance.getBlockAt(this.x, this.y, this.z + 1) == orange)
                 {
                     chunkInstance.setBlock(this.x, this.y, this.z + 1, air);
-                    chunkInstance.setBlock(this.x, this.y, this.z + 1, savannahGrass);
+                    chunkInstance.setBlock(this.x, this.y, this.z + 1, yellow);
                 }
             }
         }

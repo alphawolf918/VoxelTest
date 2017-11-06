@@ -12,7 +12,7 @@ public class World : ILoopable
         get; private set;
     }
 
-    public static string worldName = "VoxWorld";
+    public static string worldName = "world";
 
     private Thread worldThread;
 
@@ -36,7 +36,7 @@ public class World : ILoopable
 
         System.Random rand = new System.Random();
 
-        startVector = new Int3(new Vector3(rand.Next(-1000, 1000), 100, rand.Next(-1000, 1000)));
+        startVector = new Int3(new Vector3(rand.Next(-1000, 1000), 150, rand.Next(-1000, 1000)));
     }
 
     public void OnApplicationQuit()
@@ -79,7 +79,7 @@ public class World : ILoopable
                             for (int z = -renderDistance; z < renderDistance; z++)
                             {
                                 Int3 chunkPosNew = new Int3(startVector.x, startVector.y, startVector.z);
-                                chunkPosNew.addPos(new Int3((x * Chunk.chunkWidth), 0, (z * Chunk.chunkWidth)));
+                                chunkPosNew.addPos(new Int3((x * Chunk.chunkWidth), startVector.y, (z * Chunk.chunkWidth)));
                                 chunkPosNew.ToChunkCoordinates();
 
                                 string path = FileManager.getChunkString(chunkPosNew.x, chunkPosNew.z);
@@ -88,6 +88,7 @@ public class World : ILoopable
                                     try
                                     {
                                         Chunk c = new Chunk(chunkPosNew.x, chunkPosNew.z, Serializer.Deserialize_FromFile<int[,,]>(path), this);
+                                        c.world = this;
                                         LoadedChunks.Add(c);
                                     }
                                     catch (Exception ex)
@@ -98,6 +99,7 @@ public class World : ILoopable
                                 else
                                 {
                                     Chunk c = new Chunk(chunkPosNew.x, chunkPosNew.z, this);
+                                    c.world = this;
                                     c.setBiome(currentBiome);
                                     if (nextBiome == null)
                                     {
@@ -163,6 +165,7 @@ public class World : ILoopable
                                     try
                                     {
                                         Chunk c = new Chunk(chunkPosNew.x, chunkPosNew.z, Serializer.Deserialize_FromFile<int[,,]>(path), this);
+                                        c.world = this;
                                         c.Start();
                                         LoadedChunks.Add(c);
                                     }
@@ -174,6 +177,7 @@ public class World : ILoopable
                                 else
                                 {
                                     Chunk c = new Chunk(chunkPosNew.x, chunkPosNew.z, this);
+                                    c.world = this;
                                     c.setBiome(currentBiome);
                                     if (nextBiome == null)
                                     {
@@ -261,5 +265,10 @@ public class World : ILoopable
     public static void setBlock(Vector3 blockPos, Block block)
     {
         Chunk.instance.setBlock(blockPos, block);
+    }
+
+    public World getWorld()
+    {
+        return this;
     }
 }

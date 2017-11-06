@@ -98,98 +98,129 @@ public class MathHelper
 
         }
 
-        if (y - 1 <= 0 || blocks[x, y - 1, z].getIsTransparent())
-        {
-            d.Merge(new MeshData( // Bottom Face
-        new List<Vector3>() {
+        //Bottom Face
+        List<Vector3> bottomFaceV3 = new List<Vector3>() {
             new Vector3(0,0,0),
             new Vector3(0,0,1),
             new Vector3(1,0,0),
             new Vector3(1,0,1)
-        },
-        new List<int>() {
+        };
+        List<int> bottomFaceInt = new List<int>() {
                  0,2,1   ,3,1,2
-        },
-        uvMap));
-        }
+        };
 
-        if (y + 1 >= Chunk.getChunkHeight() || blocks[x, y + 1, z].getIsTransparent())
-        {
-            d.Merge(new MeshData( // Top Face
-          new List<Vector3>() {
+        //Top Face
+        List<Vector3> topFaceV3 = new List<Vector3>() {
             new Vector3(0,1,0),
             new Vector3(0,1,1),
             new Vector3(1,1,0),
             new Vector3(1,1,1)
-           },
-           new List<int>() {
+           };
+        List<int> topFaceInt = new List<int>() {
                  0,1,2,3,2,1
-           },
-            uvMap));
-        }
+           };
 
-
-
-        if (x + 1 >= Chunk.chunkWidth || blocks[x + 1, y, z].getIsTransparent())
-        {
-            d.Merge(new MeshData( // Back Face
-          new List<Vector3>() {
+        //Back Face
+        List<Vector3> backFaceV3 = new List<Vector3>() {
             new Vector3(1,0,0),
             new Vector3(1,0,1),
             new Vector3(1,1,0),
             new Vector3(1,1,1)
-           },
-           new List<int>() {
+           };
+        List<int> backFaceInt = new List<int>() {
                  0,2,1,3,1,2
-           },
-            uvMap));
+           };
 
-        }
-
-        if (x - 1 <= 0 || blocks[x - 1, y, z].getIsTransparent())
-        {
-            d.Merge(new MeshData( // Front Face
-         new List<Vector3>() {
+        //Front Face
+        List<Vector3> frontFaceV3 = new List<Vector3>() {
             new Vector3(0,0,0),
             new Vector3(0,0,1),
             new Vector3(0,1,0),
             new Vector3(0,1,1)
-          },
-          new List<int>() {
+          };
+        List<int> frontFaceInt = new List<int>() {
                  0,1,2,3,2,1
-          },
-           uvMap));
-        }
-        if (z + 1 >= Chunk.chunkWidth || blocks[x, y, z + 1].getIsTransparent())
-        {
-            d.Merge(new MeshData( // Right Face
-          new List<Vector3>() {
+          };
+
+        //Right Face
+        List<Vector3> rightFaceV3 = new List<Vector3>() {
             new Vector3(0,0,1),
             new Vector3(1,0,1),
             new Vector3(0,1,1),
             new Vector3(1,1,1)
-           },
-           new List<int>() {
+           };
+        List<int> rightFaceInt = new List<int>() {
                  0,1,2,3,2,1
-           },
-            uvMap));
-        }
-        if (z - 1 <= 0 || blocks[x, y, z - 1].getIsTransparent())
-        {
-            d.Merge(new MeshData( // Left Face
-         new List<Vector3>() {
+           };
+
+        //Left Face
+        List<Vector3> leftFaceV3 = new List<Vector3>() {
             new Vector3(0,0,0),
             new Vector3(1,0,0),
             new Vector3(0,1,0),
             new Vector3(1,1,0)
-         },
-         new List<int>() {
+         };
+        List<int> leftFaceInt = new List<int>() {
                  0,2,1    ,3,1,2
-         },
+         };
+
+        //BOTTOM
+        if (y - 1 <= 0 || blocks[x, y - 1, z].getIsTransparent())
+        {
+            d.Merge(new MeshData(
+                bottomFaceV3,
+                bottomFaceInt,
+                uvMap));
+        }
+
+        //TOP
+        if (y + 1 >= Chunk.getChunkHeight() || blocks[x, y + 1, z].getIsTransparent())
+        {
+            d.Merge(new MeshData(topFaceV3
+          ,
+           topFaceInt,
+            uvMap));
+        }
+
+        //BACK
+        if (x + 1 >= Chunk.chunkWidth || blocks[x + 1, y, z].getIsTransparent())
+        {
+            d.Merge(new MeshData(
+         backFaceV3,
+           backFaceInt,
+            uvMap));
+
+        }
+
+        //FRONT
+        if (x - 1 <= 0 || blocks[x - 1, y, z].getIsTransparent())
+        {
+            d.Merge(new MeshData(
+        frontFaceV3,
+          frontFaceInt,
+           uvMap));
+        }
+
+        //RIGHT
+        if (z + 1 >= Chunk.chunkWidth || blocks[x, y, z + 1].getIsTransparent())
+        {
+            d.Merge(new MeshData(
+          rightFaceV3,
+          rightFaceInt,
+            uvMap));
+        }
+
+        //LEFT
+        if (z - 1 <= 0 || blocks[x, y, z - 1].getIsTransparent())
+        {
+            d.Merge(new MeshData(
+         leftFaceV3,
+         leftFaceInt,
         uvMap));
 
         }
 
+        //ADD BLOCK TO WORLD
         d.AddPos(new Vector3(x - 0.5f, y - 0.5f, z - 0.5f));
 
         return d;
@@ -197,7 +228,7 @@ public class MathHelper
 
     internal static void AddBlock(Vector3 roundedPosition, Block block, EntityPlayer player)
     {
-        if (roundedPosition.y >= Chunk.getChunkHeight())
+        if (roundedPosition.y >= 256)
         {
             Logger.Log("Block placement exceeded maximum height. Aborting.");
             return;
@@ -221,7 +252,7 @@ public class MathHelper
             int y = (int) roundedPosition.y;
             int z = (int) (roundedPosition.z - (chunkPosZ * Chunk.chunkWidth));
 
-            if (currentChunk.getBlockAt(x, y, z) == Block.air || block == Block.air && currentChunk.getBlockAt(x, y, z) != null)
+            if ((currentChunk.getBlockAt(x, y, z) == Block.air || block == Block.air) && currentChunk.getBlockAt(x, y, z) != null)
             {
                 if (block == Block.air)
                 {
@@ -229,11 +260,33 @@ public class MathHelper
                     {
                         Block targetBlock = currentChunk.getBlockAt(x, y, z);
                         player.setActiveBlock(targetBlock);
+                        string targetName = targetBlock.getName();
                         if (player.Inventory.Contains(targetBlock))
                         {
-                            int blockIndex = player.Inventory.BinarySearch(targetBlock);
-                            Block invBlock = (Block) player.Inventory[blockIndex];
-                            invBlock.increaseCurrentStackSize(1);
+                            try
+                            {
+                                List<VoxObject> inv = player.Inventory;
+                                if (inv.Contains(targetBlock))
+                                {
+                                    int blockIndex = inv.IndexOf(inv.Find(bl => bl.getName() == targetName));
+                                    Block invBlock = (Block) inv[blockIndex];
+                                    int c = invBlock.getCurrentStackSize();
+                                    if (c < invBlock.getMaxStackSize())
+                                    {
+                                        invBlock.increaseCurrentStackSize();
+                                        Logger.Log("Added 1 block of " + invBlock.getName() + " to your inventory.");
+                                    }
+                                    else
+                                    {
+                                        Logger.Log("You cannot hold more than " + invBlock.getMaxStackSize() + " of " + invBlock.getName());
+                                    }
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Log(ex.InnerException.ToString() + " " + ex.StackTrace);
+                            }
                         }
                         currentChunk.getBlockAt(x, y, z).onBroken(player);
                         currentChunk.setBlock(x, y, z, Block.air);
